@@ -1,4 +1,4 @@
-# config
+# Bootstrap
 
 My personal Linux configuration files following the XDG Base Directory Specification.
 
