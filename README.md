@@ -39,6 +39,26 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/aliases.zsh"
 ```
 
+## Input Method (Rime / Squirrel)
+
+1. Install [Squirrel](https://rime.im/) via Homebrew (included in Brewfile) or manually.
+
+2. Install the double pinyin (小鶴雙拼) schema using [plum](https://github.com/rime/plum):
+
+```bash
+curl -fsSL https://git.io/rime-install | bash -s -- double-pinyin
+```
+
+3. Copy your saved config from OneDrive (RimeSync) to the local Rime config folder:
+
+```bash
+cp -r ~/Library/CloudStorage/OneDrive-Personal/RimeSync/. ~/Library/Rime/
+```
+
+4. Reload Rime: click the Squirrel menu bar icon → **Deploy** (重新部署).
+
+> The Rime config folder defaults to `~/Library/Rime` on macOS.
+
 ## Configure Applications 
 
 This repository mirrors ~/.config/ and can be reused across different machines.
