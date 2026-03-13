@@ -1,10 +1,13 @@
 # Bootstrap
 
-My personal Linux configuration files following the XDG Base Directory Specification.
+## Install Applications
+
+- Install brew from https://brew.sh/
+- Install the applications from brew using the brewfile
+
+## Configure Applications 
 
 This repository mirrors ~/.config/ and can be reused across different machines.
-
-## Init
 
 Link an app directory from this repo into your host's config directory:
 
@@ -14,7 +17,7 @@ Link an app directory from this repo into your host's config directory:
 
 This creates a symlink from `<repo>/opencode/` to `${XDG_CONFIG_HOME:-~/.config}/opencode`. If the destination already exists and isn't the desired symlink, it is moved aside to `*.bak.<timestamp>`.
 
-## OpenCode
+Example: OpenCode
 
 OpenCode configuration lives in `opencode/`.
 
