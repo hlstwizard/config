@@ -23,6 +23,9 @@ cask "stats"
 cask "rectangle"
 cask "hiddenbar"          # menu bar item manager
 
+# Security
+brew "gnupg"
+
 # IM
 cask "slack"
 cask "wechat"
