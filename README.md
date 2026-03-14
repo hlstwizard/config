@@ -43,13 +43,21 @@ for f in "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/"*.zsh; do source "$f"; done
 
 1. Install [Squirrel](https://rime.im/) via Homebrew (included in Brewfile) or manually.
 
-2. Install the double pinyin (小鶴雙拼) schema using [plum](https://github.com/rime/plum):
+2. Install [rime-ice](https://github.com/iDvel/rime-ice) (雾凇拼音) using [Plum](https://github.com/rime/plum) (东风破):
 
 ```bash
-curl -fsSL https://git.io/rime-install | bash -s -- double-pinyin
+# Install Plum
+cd ~
+git clone https://github.com/rime/plum.git plum
+
+# Install all rime-ice files
+cd ~/plum
+bash rime-install iDvel/rime-ice:others/recipes/full
 ```
 
-3. Copy your saved config from OneDrive (RimeSync) to the local Rime config folder:
+> To update rime-ice later, re-run `bash rime-install iDvel/rime-ice:others/recipes/full` from `~/plum`.
+
+3. Overlay your saved config from OneDrive on top of the rime-ice base:
 
 ```bash
 cp -r ~/Library/CloudStorage/OneDrive-Personal/RimeSync/. ~/Library/Rime/
