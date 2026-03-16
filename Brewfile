@@ -1,3 +1,13 @@
+# yazi
+brew "yazi"
+brew "ffmpeg-full"
+brew "sevenzip"
+brew "poppler"
+brew "fd"
+brew "resvg"
+brew "imagemagick-full"
+cask "font-symbols-only-nerd-font"
+
 # nvim
 brew "neovim"
 brew "luarocks"
