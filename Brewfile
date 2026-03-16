@@ -29,6 +29,10 @@ cask "squirrel-app"        # Rime (Squirrel) input method
 cask "microsoft-edge"
 cask "obsidian"
 
+# docker
+brew "colima"
+brew "docker"
+
 # System
 cask "stats"
 cask "rectangle"
