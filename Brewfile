@@ -12,6 +12,7 @@ cask "font-symbols-only-nerd-font"
 brew "neovim"
 brew "luarocks"
 brew "ripgrep"
+brew "tree-sitter-cli"
 
 # terminal
 brew "zoxide"
