@@ -11,3 +11,7 @@ copilot/command-history-state.json
 copilot/config.json
 copilot/logs/
 copilot/pkg/
+
+# SSH: track only config
+ssh/*
+!ssh/config
