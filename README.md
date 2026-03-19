@@ -13,6 +13,7 @@ Notes:
 
 - System utilities are managed in `Brewfile` (currently `stats`, `hiddenbar`, and `raycast`).
 - `raycast` is used as the launcher/window-management tool.
+- Raycast config is stored in OneDrive; remember to back it up regularly.
 
 ## Set Up Zsh
 
