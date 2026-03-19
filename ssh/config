@@ -20,20 +20,13 @@ IdentityFile ~/.ssh/id_ed25519
 
 Host testing
 User hlst
-HostName 20.2.192.170
-IdentityFile ~/.ssh/testing.pem
-Port 22
-
-Host bastion
-User hlst
 HostName 57.158.25.77
 IdentityFile ~/.ssh/id_ed25519
 
-
-Host testing-100
-HostName 20.2.192.170
+Host openclaw-test
 User hlst
-IdentityFile /Users/demonware/.ssh/id_ed25519
+HostName 40.83.97.133
+IdentityFile ~/.ssh/hlstwizard
 
 Host mac-mini
 User huangyiming

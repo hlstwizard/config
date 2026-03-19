@@ -38,8 +38,8 @@ brew "docker"
 
 # System
 cask "stats"
-cask "rectangle"
 cask "hiddenbar"          # menu bar item manager
+cask "raycast"            # Launcher
 
 # Security
 brew "gnupg"

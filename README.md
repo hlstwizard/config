@@ -9,6 +9,11 @@
 brew bundle --file=Brewfile
 ```
 
+Notes:
+
+- System utilities are managed in `Brewfile` (currently `stats`, `hiddenbar`, and `raycast`).
+- `raycast` is used as the launcher/window-management tool.
+
 ## Set Up Zsh
 
 1. Install [Oh My Zsh](https://ohmyz.sh/):
@@ -38,6 +43,8 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 ```zsh
 for f in "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/"*.zsh; do source "$f"; done
 ```
+
+This also loads `zsh/bracketed-paste.zsh`, which enables `bracketed-paste-magic` to prevent pasted commands from showing raw control prefixes like `[200~`.
 
 ## Input Method (Rime / Squirrel)
 
@@ -98,6 +105,16 @@ Exceptions:
 
 - `copilot` links to `~/.copilot`
 - `ssh` links to `~/.ssh`
+
+### SSH Config
+
+SSH hosts are managed in `ssh/config` in this repository.
+
+```bash
+./init.sh ssh
+```
+
+This symlinks the repo `ssh/` directory to `~/.ssh` so host aliases (for example `testing` and `openclaw-test`) stay versioned and consistent across machines.
 
 If the destination already exists and isn't the desired symlink, it is moved aside to `*.bak.<timestamp>`.
 
