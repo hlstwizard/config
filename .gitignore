@@ -15,3 +15,7 @@ copilot/pkg/
 # SSH: track only config
 ssh/*
 !ssh/config
+
+# raycast
+raycast/ai/**
+raycast/extensions/**
