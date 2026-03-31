@@ -8,6 +8,7 @@
 ```bash
 brew bundle --file=brewfiles/common.Brewfile
 brew bundle --file=brewfiles/macos.Brewfile
+brew bundle --file=brewfiles/ai.Brewfile
 ```
 
 Or use the helper script to auto-select by OS:
@@ -19,6 +20,7 @@ Or use the helper script to auto-select by OS:
 - macOS (`Darwin`) -> `brewfiles/macos.Brewfile`
 - Fedora Linux -> `brewfiles/fedora-dev.Brewfile`
 - `brewfiles/common.Brewfile` is always applied first
+- `brewfiles/ai.Brewfile` is applied last
 
 - For a Fedora workstation (pure development profile), use:
   (manual alternative to `./bootstrap.sh`)
@@ -26,12 +28,14 @@ Or use the helper script to auto-select by OS:
 ```bash
 brew bundle --file=brewfiles/common.Brewfile
 brew bundle --file=brewfiles/fedora-dev.Brewfile
+brew bundle --file=brewfiles/ai.Brewfile
 ```
 
 Design notes:
 
 - Put shared tools in `brewfiles/common.Brewfile` (e.g., `fzf`).
 - Put OS-specific tools in profile files (`brewfiles/macos.Brewfile` for macOS, `brewfiles/fedora-dev.Brewfile` for Fedora).
+- Put AI tooling in `brewfiles/ai.Brewfile` (currently `anomalyco/tap/opencode`).
 - If you want to replace a shared package later, update only `brewfiles/common.Brewfile`.
 
 Notes:

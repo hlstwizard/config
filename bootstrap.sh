@@ -25,6 +25,7 @@ Linux)
 esac
 
 common_file="${brewfiles_dir}/common.Brewfile"
+ai_file="${brewfiles_dir}/ai.Brewfile"
 
 if [[ ! -f "$common_file" ]]; then
 	echo "error: common brewfile not found: $common_file" >&2
@@ -36,8 +37,16 @@ if [[ ! -f "$profile_file" ]]; then
 	exit 3
 fi
 
+if [[ ! -f "$ai_file" ]]; then
+	echo "error: AI brewfile not found: $ai_file" >&2
+	exit 3
+fi
+
 echo "Using common Brewfile: $common_file"
 brew bundle --file="$common_file"
 
 echo "Using profile Brewfile: $profile_file"
 brew bundle --file="$profile_file"
+
+echo "Using AI Brewfile: $ai_file"
+brew bundle --file="$ai_file"
