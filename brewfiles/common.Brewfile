@@ -7,6 +7,7 @@ brew "ripgrep"
 brew "tree-sitter-cli"
 
 # terminal
+brew "zsh"
 brew "zoxide"
 brew "git"
 brew "jq"
