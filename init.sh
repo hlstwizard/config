@@ -17,7 +17,70 @@ Exceptions:
     git/.gitignore_global -> ~/.gitignore_global
 If the destination already exists and is not the desired symlink, it will be
 moved aside to a timestamped .bak.<timestamp> path.
+
+Special behavior for 'zsh':
+  - ensures Oh My Zsh is installed (unattended)
+  - installs configured custom plugins
+  - appends the managed zsh config source snippet to ~/.zshrc (if missing)
 EOF
+}
+
+install_oh_my_zsh_if_missing() {
+	if [[ -d "$HOME/.oh-my-zsh" ]]; then
+		echo "ok: Oh My Zsh already installed"
+		return 0
+	fi
+
+	echo "installing: Oh My Zsh (unattended)"
+	RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+}
+
+install_zsh_plugins_if_available() {
+	local script_dir="$1"
+	local plugin_script="${script_dir}/install-zsh-plugins.sh"
+
+	if [[ ! -f "$plugin_script" ]]; then
+		echo "skip: plugin installer not found: $plugin_script"
+		return 0
+	fi
+
+	echo "installing: Oh My Zsh custom plugins"
+	bash "$plugin_script"
+}
+
+ensure_zshrc_sources_config_dir() {
+	local zshrc="$HOME/.zshrc"
+	local marker_begin="# >>> bootstrap-zsh-managed >>>"
+	local marker_end="# <<< bootstrap-zsh-managed <<<"
+	local source_line='for f in "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/"*.zsh; do source "$f"; done'
+
+	touch "$zshrc"
+
+	if grep -Fq "$marker_begin" "$zshrc"; then
+		echo "ok: managed zshrc snippet already present"
+		return 0
+	fi
+
+	if grep -Fq "$source_line" "$zshrc"; then
+		echo "ok: zsh config source line already present"
+		return 0
+	fi
+
+	cat >>"$zshrc" <<EOF
+
+$marker_begin
+$source_line
+$marker_end
+EOF
+
+	echo "updated: appended zsh config source snippet to $zshrc"
+}
+
+bootstrap_zsh() {
+	local script_dir="$1"
+	install_oh_my_zsh_if_missing
+	install_zsh_plugins_if_available "$script_dir"
+	ensure_zshrc_sources_config_dir
 }
 
 link_path() {
@@ -91,3 +154,7 @@ else
 fi
 
 link_path "$src" "$dest"
+
+if [[ "$app" == "zsh" ]]; then
+	bootstrap_zsh "$script_dir"
+fi
