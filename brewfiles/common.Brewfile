@@ -26,3 +26,4 @@ brew "docker"
 
 # Security
 brew "gnupg"
+brew "bitwarden-cli"

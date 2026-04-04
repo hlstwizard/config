@@ -125,6 +125,49 @@ export CONTEXT7_API_KEY="your-api-key"
 - **Copilot** reads it via `copilot/mcp-config.json` (passed as an HTTP header to the Context7 MCP endpoint).
 - **OpenCode** reads it via `opencode/opencode.json` (passed to `npx @upstash/context7-mcp`).
 
+### Load Env Vars From Bitwarden CLI (zsh)
+
+If you use Bitwarden CLI (`bw`) to store secrets, zsh can auto-load selected values into env vars during shell startup.
+
+1. Ensure dependencies exist:
+
+```bash
+brew install bitwarden-cli jq
+```
+
+2. Add mappings to `~/.bw-env` (one per line):
+
+```text
+# ENV_VAR|item-id-or-name|source
+OPENAI_API_KEY|my-openai-key|password
+GITHUB_TOKEN|gh-pat|field:token
+MY_USERNAME|some-login|username
+```
+
+Supported `source` values:
+
+- `password` (default)
+- `notes`
+- `username`
+- `totp`
+- `field:<Custom Field Name>`
+
+3. Unlock Bitwarden vault before starting zsh (or run `bwenv` after unlocking):
+
+```bash
+export BW_SESSION="$(bw unlock --raw)"
+```
+
+4. Run `./init.sh zsh` to sync scripts, then open a new shell.
+
+Notes:
+
+- Loader script: `zsh/scripts/bitwarden-env.zsh`
+- Default config file path: `~/.bw-env` (override with `BW_ENV_FILE`)
+- Auto-load is enabled by default (`BW_ENV_AUTOLOAD=1`)
+- Manual reload command in shell: `bwenv`
+- Convenience command for unlock + load: `bwup`
+
 ## Configure Applications 
 
 This repository primarily mirrors `~/.config/` and can be reused across different machines.
