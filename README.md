@@ -46,13 +46,7 @@ Notes:
 
 ## Set Up Zsh
 
-1. Enable the plugins in `~/.zshrc` by updating the `plugins` line:
-
-```zsh
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-fzf-history-search)
-```
-
-2. Load zsh configs and plugins via:
+1. Load zsh configs and plugins via:
 
 ```bash
 ./init.sh zsh
@@ -72,6 +66,12 @@ To add a plugin, update only `zsh/plugins.conf` with one line per plugin:
 
 ```text
 plugin-name|https://github.com/org/repo.git
+```
+
+For Oh My Zsh built-in plugins (no separate git repo), keep the URL empty:
+
+```text
+git|
 ```
 
 Then rerun:
@@ -172,6 +172,10 @@ Included defaults:
 - enforce Unix line endings (`core.eol=lf`, `core.autocrlf=input`)
 - global ignore file (`core.excludesfile=~/.gitignore_global`)
 - common quality-of-life settings (`fetch.prune`, `rebase.autoStash`, `push.autoSetupRemote`, etc.)
+- `git-delta` integration for paging and interactive diffs (`core.pager=delta`, `interactive.diffFilter=delta --color-only`)
+- `merge.conflictStyle=zdiff3` for clearer conflict context
+
+When you run `./init.sh git`, the script also checks whether `delta` is installed and prints a hint if missing (`brew install git-delta`).
 
 Example: OpenCode
 

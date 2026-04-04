@@ -3,6 +3,7 @@
   eol = lf
   excludesfile = ~/.gitignore_global
   editor = nvim
+  pager = delta
 [init]
   defaultBranch = main
 [pull]
@@ -14,6 +15,11 @@
 [push]
   autoSetupRemote = true
 [merge]
-  conflictstyle = zdiff3
+  conflictStyle = zdiff3
 [diff]
   colorMoved = default
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  dark = true

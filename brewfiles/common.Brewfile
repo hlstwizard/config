@@ -16,6 +16,7 @@ brew "fzf"
 # GIT
 brew "git-crypt"
 brew "gh"
+brew "git-delta"
 
 # node
 brew "nvm"

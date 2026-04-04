@@ -52,6 +52,16 @@ link_path() {
 	echo "linked: $dest_path -> $src_abs"
 }
 
+check_git_delta_installed() {
+	if command -v delta >/dev/null 2>&1; then
+		echo "ok: git-delta is installed"
+		return 0
+	fi
+
+	echo "warn: git-delta is not installed" >&2
+	echo "hint: install it with: brew install git-delta" >&2
+}
+
 if [[ ${1-} == "-h" || ${1-} == "--help" ]]; then
 	usage
 	exit 0
@@ -90,6 +100,7 @@ if [[ "$app" == "git" ]]; then
 
 	link_path "$gitconfig_src" "$HOME/.gitconfig"
 	link_path "$gitignore_src" "$HOME/.gitignore_global"
+	check_git_delta_installed
 	exit 0
 fi
 
