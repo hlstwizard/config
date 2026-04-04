@@ -58,6 +58,8 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-fzf-history-search)
 ./init.sh zsh
 ```
 
+Implementation note: zsh bootstrap logic is maintained in `zsh/init.sh`, and `init.sh` only dispatches to it for the `zsh` app.
+
 `./init.sh zsh` now:
 
 - installs Oh My Zsh if missing (unattended)
