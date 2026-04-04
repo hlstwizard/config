@@ -63,9 +63,22 @@ Implementation note: zsh bootstrap logic is maintained in `zsh/init.sh`, and `in
 `./init.sh zsh` now:
 
 - installs Oh My Zsh if missing (unattended)
-- clones common plugins into `${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins`
+- clones custom plugins listed in `zsh/plugins.conf` into `${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins`
+- syncs plugin activation list to `~/.zsh_plugins`
 - symlinks all repo `zsh/scripts/*.zsh` files into `${ZSH_CUSTOM:-~/.oh-my-zsh/custom}`
 - symlinks repo `zsh/.zshrc` to `~/.zshrc`
+
+To add a plugin, update only `zsh/plugins.conf` with one line per plugin:
+
+```text
+plugin-name|https://github.com/org/repo.git
+```
+
+Then rerun:
+
+```bash
+./init.sh zsh
+```
 
 This also loads `zsh/scripts/bracketed-paste.zsh`, which enables `bracketed-paste-magic` to prevent pasted commands from showing raw control prefixes like `[200~`.
 

@@ -14,7 +14,12 @@ zstyle ':omz:update' mode disabled
 
 # Keep a simple default theme and essential plugins only.
 ZSH_THEME="robbyrussell"
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-fzf-history-search)
+
+if [[ -f "$HOME/.zsh_plugins" ]]; then
+  source "$HOME/.zsh_plugins"
+else
+  plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-fzf-history-search)
+fi
 
 source "$ZSH/oh-my-zsh.sh"
 
