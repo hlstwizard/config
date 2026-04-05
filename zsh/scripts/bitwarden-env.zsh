@@ -7,7 +7,7 @@
 #   ENV_VAR|item-id-or-name|field:Custom Field Name
 
 : "${BW_ENV_FILE:=$HOME/.bw-env}"
-: "${BW_ENV_AUTOLOAD:=1}"
+: "${BW_ENV_AUTOLOAD:=0}"
 
 _bw_env_trim() {
   local value="$1"
@@ -121,20 +121,20 @@ bwenv() {
 }
 
 bwup() {
-  local status session
+  local bw_status session
 
   if ! command -v bw >/dev/null 2>&1; then
     printf 'bwup: bw command not found\n' >&2
     return 127
   fi
 
-  status="$(_bw_env_status)"
-  if [[ "$status" == "unauthenticated" ]]; then
+  bw_status="$(_bw_env_status)"
+  if [[ "$bw_status" == "unauthenticated" ]]; then
     bw login || return $?
-    status="$(_bw_env_status)"
+    bw_status="$(_bw_env_status)"
   fi
 
-  if [[ "$status" != "unlocked" ]]; then
+  if [[ "$bw_status" != "unlocked" ]]; then
     session="$(bw unlock --raw)" || return $?
     export BW_SESSION="$session"
   fi

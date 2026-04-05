@@ -44,6 +44,18 @@ Notes:
 - `raycast` is used as the launcher/window-management tool.
 - Raycast config is stored in OneDrive; remember to back it up regularly.
 
+### Raycast Security Scripts
+
+This repo includes custom Raycast scripts under `raycast/scripts/`.
+
+- `get-bitwarden-2fa.sh`: fetches TOTP from Bitwarden CLI and copies it to clipboard. It caches a BW session token in `~/Library/Caches/raycast-bitwarden-session` to reduce repeated unlock prompts.
+- `lock-mac-and-bitwarden.sh`: locks Bitwarden first (`bw lock`), clears the cached session token file, then locks the Mac session.
+
+Recommended hardening:
+
+- In Raycast, bind your lock shortcut (for example `cmd+l`) to `lock-mac-and-bitwarden.sh` instead of the built-in Lock command.
+- Keep the old lock command unbound to avoid bypassing Bitwarden lock.
+
 ## Set Up Zsh
 
 1. Load zsh configs and plugins via:
@@ -123,7 +135,88 @@ export CONTEXT7_API_KEY="your-api-key"
 ```
 
 - **Copilot** reads it via `copilot/mcp-config.json` (passed as an HTTP header to the Context7 MCP endpoint).
-- **OpenCode** reads it via `opencode/opencode.json` (passed to `npx @upstash/context7-mcp`).
+- **OpenCode (daemonized MCP mode)** reads it via `mcp/.env` when you run `mcp/start.sh`.
+
+## Local Daemonized MCP Servers (Shared Across OpenCode Processes)
+
+To avoid each OpenCode process spawning its own MCP server instances, this repo now supports shared local MCP daemons under `mcp/`.
+
+Files:
+
+- `mcp/start.sh`: starts MCP servers as background daemons (via `supergateway`) and writes PID/log files.
+- `mcp/stop.sh`: stops daemonized MCP servers.
+- `mcp/status.sh`: prints running/stopped status.
+- `mcp/servers.conf`: server list and start commands (`name|enabled|port|stdio_command`).
+- `mcp/lib.sh`: shared helper functions used by the scripts.
+- `mcp/sync-opencode-mcp.sh`: syncs enabled server endpoints into `opencode/opencode.json`.
+
+Current local endpoints (used by `opencode/opencode.json`):
+
+- Azure MCP: `http://127.0.0.1:8781/mcp`
+- awesome-copilot MCP: `http://127.0.0.1:8782/mcp`
+- Context7 MCP: `http://127.0.0.1:8783/mcp`
+
+### Usage
+
+1. Create an env file for MCP-only secrets:
+
+```bash
+cp mcp/.env.example mcp/.env
+```
+
+2. Edit `mcp/.env` and set:
+
+```text
+CONTEXT7_API_KEY=your-api-key
+```
+
+3. Edit `mcp/servers.conf` if you need to customize ports, enable/disable servers, or replace commands:
+
+```text
+# name|enabled|port|stdio_command
+azure|1|8781|uvx --from msmcp-azure azmcp server start
+awesome-copilot|1|8782|docker run -i --rm ghcr.io/microsoft/mcp-dotnet-samples/awesome-copilot:latest
+context7|1|8783|npx -y @upstash/context7-mcp --api-key ${CONTEXT7_API_KEY}
+```
+
+- Set `enabled` to `0` to disable a server.
+- If you change ports, update `opencode/opencode.json` URLs accordingly.
+
+4. Sync OpenCode MCP endpoints from `servers.conf`:
+
+```bash
+bash mcp/sync-opencode-mcp.sh
+```
+
+- This writes `opencode/opencode.json` `mcp` entries as `remote` URLs for enabled servers.
+
+5. Start daemons:
+
+```bash
+bash mcp/start.sh
+```
+
+6. Check status:
+
+```bash
+bash mcp/status.sh
+```
+
+7. Stop daemons when needed:
+
+```bash
+bash mcp/stop.sh
+```
+
+Notes:
+
+- Runtime files are stored in `mcp/run/` (`*.pid`, `logs/*.log`) and ignored by git.
+- This keeps shell env loading on-demand: MCP-related env vars are only loaded when starting MCP daemons.
+- You can override the servers config path with `MCP_SERVERS_FILE`, for example:
+
+```bash
+MCP_SERVERS_FILE=mcp/servers.conf.example bash mcp/status.sh
+```
 
 ### Load Env Vars From Bitwarden CLI (zsh)
 
@@ -164,7 +257,7 @@ Notes:
 
 - Loader script: `zsh/scripts/bitwarden-env.zsh`
 - Default config file path: `~/.bw-env` (override with `BW_ENV_FILE`)
-- Auto-load is enabled by default (`BW_ENV_AUTOLOAD=1`)
+- Auto-load is disabled by default (`BW_ENV_AUTOLOAD=0`)
 - Manual reload command in shell: `bwenv`
 - Convenience command for unlock + load: `bwup`
 
@@ -225,3 +318,7 @@ Example: OpenCode
 OpenCode configuration lives in `opencode/`.
 
 - `opencode/AGENTS.md`: default agent instructions (copied from `~/AGENTS.md`).
+
+## TODO
+
+- Add startup management integration (e.g., `launchd` on macOS) for MCP daemons if auto-start on login is desired.

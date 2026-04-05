@@ -1,5 +1,9 @@
 # Environment variables
 .env
+mcp/.env
+
+# MCP daemon runtime files
+mcp/run/
 
 # OS files
 .DS_Store
