@@ -74,6 +74,9 @@ Implementation note: zsh bootstrap logic is maintained in `zsh/init.sh`, and `in
 - symlinks all repo `zsh/scripts/*.zsh` files into `${ZSH_CUSTOM:-~/.oh-my-zsh/custom}`
 - symlinks repo `zsh/.zshrc` to `~/.zshrc`
 
+`zsh/.zshrc` also initializes Homebrew shell environment for both macOS and Linux
+(`brew shellenv`), so custom scripts can safely use commands installed via Homebrew.
+
 To add a plugin, update only `zsh/plugins.conf` with one line per plugin:
 
 ```text

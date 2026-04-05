@@ -1,4 +1,8 @@
 export NVM_DIR="$HOME/.nvm"
+if ! command -v brew >/dev/null 2>&1; then
+  return 0
+fi
+
 _brew_prefix="$(brew --prefix)"
 _nvm_sh="${_brew_prefix}/opt/nvm/nvm.sh"
 _nvm_bash_completion="${_brew_prefix}/opt/nvm/etc/bash_completion.d/nvm"

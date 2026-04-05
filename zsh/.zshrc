@@ -8,6 +8,17 @@ export ZSH="$HOME/.oh-my-zsh"
 export ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcompdump-${HOST%%.*}-${ZSH_VERSION}"
 mkdir -p "${ZSH_COMPDUMP%/*}"
 
+# Initialize Homebrew environment for both macOS and Linux.
+if [[ -x "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x "/usr/local/bin/brew" ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+elif [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif command -v brew >/dev/null 2>&1; then
+  eval "$(brew shellenv)"
+fi
+
 # Skip compaudit on startup and disable OMZ auto-update checks.
 ZSH_DISABLE_COMPFIX="true"
 zstyle ':omz:update' mode disabled
