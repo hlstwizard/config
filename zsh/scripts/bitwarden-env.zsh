@@ -7,7 +7,7 @@
 #   ENV_VAR|item-id-or-name|field:Custom Field Name
 
 : "${BW_ENV_FILE:=$HOME/.bw-env}"
-: "${BW_ENV_AUTOLOAD:=1}"
+: "${BW_ENV_AUTOLOAD:=0}"
 
 _bw_env_trim() {
   local value="$1"
