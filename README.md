@@ -176,7 +176,7 @@ Notes:
 
 - Loader script: `zsh/scripts/bitwarden-env.zsh`
 - Default config file path: `~/.bw-env` (override with `BW_ENV_FILE`)
-- Auto-load is enabled by default (`BW_ENV_AUTOLOAD=1`)
+- Auto-load is disabled by default (`BW_ENV_AUTOLOAD=0`)
 - Manual reload command in shell: `bwenv`
 - Convenience command for unlock + load: `bwup`
 
@@ -237,3 +237,8 @@ Example: OpenCode
 OpenCode configuration lives in `opencode/`.
 
 - `opencode/AGENTS.md`: default agent instructions (copied from `~/AGENTS.md`).
+
+## TODO
+
+- Refactor OpenCode MCP integration to use local daemonized MCP servers (e.g., via Docker or similar), so multiple OpenCode processes can share the same running servers instead of each process starting its own.
+- Keep shell environment variable loading on-demand only, so MCP-required env vars are read when needed rather than preloaded for every shell session.
