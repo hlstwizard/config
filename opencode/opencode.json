@@ -5,26 +5,16 @@
   },
   "mcp": {
     "azure": {
-      "type": "local",
-      "command": ["uvx", "--from", "msmcp-azure", "azmcp", "server", "start"]
+      "type": "remote",
+      "url": "http://127.0.0.1:8781/mcp"
     },
     "awesome-copilot": {
-      "type": "local",
-      "command": [
-        "docker",
-        "run",
-        "-i",
-        "--rm",
-        "ghcr.io/microsoft/mcp-dotnet-samples/awesome-copilot:latest"
-      ]
+      "type": "remote",
+      "url": "http://127.0.0.1:8782/mcp"
     },
     "context7": {
-      "type": "local",
-      "command": [
-        "sh",
-        "-c",
-        "npx -y @upstash/context7-mcp --api-key $CONTEXT7_API_KEY"
-      ]
+      "type": "remote",
+      "url": "http://127.0.0.1:8783/mcp"
     }
   },
   "plugin": [
