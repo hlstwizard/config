@@ -27,6 +27,15 @@ function M.apply(config, wezterm, constants)
 	config.show_tabs_in_tab_bar = true
 	config.use_fancy_tab_bar = false
 	config.status_update_interval = 1000
+	config.launch_menu = config.launch_menu or {}
+	table.insert(config.launch_menu, {
+		label = "local (unix mux)",
+		args = { "zsh", "-l" },
+	})
+	table.insert(config.launch_menu, {
+		label = "mac mini (tmux)",
+		args = { "ssh", "macmini-tmux" },
+	})
 	if not platform.is_windows(wezterm) then
 		config.unix_domains = {
 			{

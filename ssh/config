@@ -33,6 +33,13 @@ HostName 192.168.0.49
 User huangyiming
 IdentityFile ~/.ssh/hlstwizard
 
+Host macmini-tmux
+HostName 192.168.0.49
+User huangyiming
+IdentityFile ~/.ssh/hlstwizard
+RequestTTY force
+RemoteCommand /bin/zsh -lc 'tmux new-session -A -s main'
+
 Host compute
 HostName compute
 User hlst
@@ -43,4 +50,3 @@ Host local_fedora
 HostName 192.168.64.2
 User hlst
 IdentityFile ~/.ssh/id_ed25519
-

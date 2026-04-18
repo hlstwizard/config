@@ -64,6 +64,7 @@ function M.build(wezterm, act, constants)
 			table.insert(keys, binding)
 		end
 	elseif platform.is_macos(wezterm) then
+		table.insert(keys, { key = "n", mods = "CMD", action = act.EmitEvent(constants.EVENTS.OPEN_WORKSPACE_PICKER) })
 		table.insert(keys, { key = "d", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) })
 		table.insert(keys, { key = "d", mods = "CMD|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) })
 		table.insert(keys, { key = "w", mods = "CMD", action = act.CloseCurrentPane({ confirm = false }) })
