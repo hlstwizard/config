@@ -29,13 +29,25 @@ function M.apply(config, wezterm, constants)
 	config.status_update_interval = 1000
 	config.launch_menu = config.launch_menu or {}
 	table.insert(config.launch_menu, {
+		label = "default workspace",
+		args = { "zsh", "-l" },
+	})
+	table.insert(config.launch_menu, {
 		label = "local (unix mux)",
 		args = { "zsh", "-l" },
 	})
 	table.insert(config.launch_menu, {
-		label = "mac mini (tmux)",
-		args = { "ssh", "macmini-tmux" },
+		label = "mac mini (wezterm mux)",
+		domain = { DomainName = constants.MACMINI_SSH_DOMAIN },
 	})
+	config.ssh_domains = {
+		{
+			name = "mac-mini",
+			remote_address = "macmini",
+			username = "huangyiming",
+			assume_shell = "Posix",
+		},
+	}
 	if not platform.is_windows(wezterm) then
 		config.unix_domains = {
 			{

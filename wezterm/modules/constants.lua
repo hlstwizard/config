@@ -1,6 +1,7 @@
 local M = {}
 
 M.DOMAIN_NAME = "unix"
+M.MACMINI_SSH_DOMAIN = "SSH:mac-mini"
 
 M.NAV_DIRECTIONS = {
 	h = "Left",

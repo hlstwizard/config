@@ -38,13 +38,18 @@ wezterm --version
 
 ## Launcher entries: local and remote
 
-- Ensure `ssh/config` contains `Host macmini-tmux` with:
-  - `RequestTTY force`
-  - `RemoteCommand tmux new-session -A -s main`
+- Ensure `ssh/config` contains `Host macmini` and/or `Host mac-mini`.
+- This config targets WezTerm SSH domain name `SSH:mac-mini`.
+- On remote `macmini`, make sure `wezterm` is installed and `wezterm-mux-server` is available in `PATH`.
 - In WezTerm launch menu:
   - `local (unix mux)` opens a local login shell.
-  - `mac mini (tmux)` opens a persistent remote `tmux` session.
+  - `mac mini (wezterm mux)` opens a remote WezTerm SSH domain session.
 - Local startup behavior (`connect unix`) remains unchanged.
 - On macOS, `Cmd+N` opens a workspace picker with `local` and `mac mini`.
 - If the selected workspace already has a window, WezTerm focuses it.
 - If not, WezTerm creates a new window in that workspace.
+
+### Remote mux behavior
+
+- This config uses WezTerm SSH domain for `macmini` workspace, not `tmux`.
+- Multiplexing and pane/tab management are handled by WezTerm on the remote side.

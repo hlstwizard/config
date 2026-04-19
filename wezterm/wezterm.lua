@@ -12,7 +12,7 @@ local presets = require("modules.presets")
 local status = require("modules.status")
 local window = require("modules.window")
 
-events.register(wezterm, mux, window.fit_window_to_active_screen, constants.EVENTS)
+events.register(wezterm, mux, window.fit_window_to_active_screen, constants.EVENTS, constants)
 presets.register(wezterm, act, constants.EVENTS)
 status.register(wezterm)
 
